@@ -1,8 +1,9 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { BrandMark, cn, NewsletterForm, ProfileAvatar } from './components';
 import { NAV_ITEMS } from './data';
+import { MobileMenu } from './MobileMenu';
 import { useAuth } from './AuthProvider';
 import './site.css';
 
@@ -43,7 +44,7 @@ function SiteNav() {
     <header
       className={cn(
         'fixed inset-x-0 top-0 z-[100] transition-all duration-500',
-        scrolled || open
+        scrolled
           ? 'border-b border-white/10 bg-[#090909]/90 backdrop-blur-xl'
           : 'border-b border-transparent bg-gradient-to-b from-black/40 to-transparent',
       )}
@@ -105,7 +106,7 @@ function SiteNav() {
             className="-mr-2 p-2 text-white lg:hidden"
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
-            aria-controls="site-mobile-menu"
+            aria-controls="mobile-menu"
             onClick={() => setOpen((value) => !value)}
           >
             {open ? <X size={24} /> : <Menu size={24} />}
@@ -113,68 +114,7 @@ function SiteNav() {
         </div>
       </nav>
 
-      <div
-        id="site-mobile-menu"
-        className={cn(
-          'overflow-y-auto border-white/10 bg-[#090909]/95 backdrop-blur-xl transition-all duration-500 lg:hidden',
-          open
-            ? 'h-[calc(100svh-78px)] border-t opacity-100'
-            : 'h-0 opacity-0',
-        )}
-      >
-        <div className="px-5 pb-7 pt-4">
-          <div className="flex flex-col">
-            {NAV_ITEMS.map((item, index) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                tabIndex={open ? 0 : -1}
-                className={({ isActive }) =>
-                  cn(
-                    'flex items-center justify-between border-b border-white/10 py-4 text-xl font-light tracking-[-0.03em] transition-colors',
-                    isActive ? 'text-[#e8702a]' : 'text-white/80 hover:text-white',
-                  )
-                }
-              >
-                <span>
-                  <span className="mr-3 align-middle text-[9px] tracking-[0.18em] text-white/30">
-                    0{index + 1}
-                  </span>
-                  {item.label}
-                </span>
-                <ArrowUpRight size={17} strokeWidth={1.5} className="text-white/30" />
-              </NavLink>
-            ))}
-          </div>
-          <Link
-            to={account ? '/account' : '/sign-up'}
-            tabIndex={open ? 0 : -1}
-            className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[#e8702a] px-6 py-3.5 text-sm font-medium text-white"
-          >
-            {account ? (
-              <ProfileAvatar
-                src={account.avatar}
-                name={displayName}
-                className="h-5 w-5 text-[8px]"
-              />
-            ) : null}
-            {account ? 'Open my field record' : 'Sign Up'} <ArrowRight size={15} />
-          </Link>
-          {!account ? (
-            <Link
-              to="/sign-in"
-              tabIndex={open ? 0 : -1}
-              className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3.5 text-sm font-medium text-white/75"
-            >
-              Sign In
-            </Link>
-          ) : (
-            <p className="mt-3 text-center text-[10px] uppercase tracking-[0.16em] text-white/35">
-              Signed in as {displayName}
-            </p>
-          )}
-        </div>
-      </div>
+      <MobileMenu open={open} onClose={() => setOpen(false)} />
     </header>
   );
 }
