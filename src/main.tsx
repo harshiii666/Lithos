@@ -8,7 +8,10 @@ import {
 } from 'react-router-dom';
 import App from './App';
 import { AuthProvider } from './site/AuthProvider';
+import { installZoomLock } from './zoomLock';
 import './index.css';
+
+installZoomLock();
 
 const CoursePage = lazy(() => import('./site/pages/CoursePage'));
 const FieldGuidesPage = lazy(() => import('./site/pages/FieldGuidesPage'));
