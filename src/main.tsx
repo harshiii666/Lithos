@@ -24,6 +24,7 @@ const AboutPage = lazy(() => import('./site/pages/AboutPage'));
 const NotFoundPage = lazy(() => import('./site/pages/NotFoundPage'));
 
 const HOME_TITLE = 'Lithos — Layers Hold Tales of Time';
+const BASENAME = import.meta.env.BASE_URL.replace(/\/$/, '') || '/';
 
 function RouteEffects() {
   const { pathname } = useLocation();
@@ -60,7 +61,7 @@ function RouteLoader() {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={BASENAME}>
       <AuthProvider>
         <RouteEffects />
         <Suspense fallback={<RouteLoader />}>

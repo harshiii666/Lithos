@@ -20,11 +20,13 @@ interface Maker {
   practice: string[];
   atLithos: string;
   /**
-   * Add a portrait path here when the photograph is ready, for example
-   * `/portraits/nisha.jpg`. The empty plate is replaced automatically.
+   * Portrait paths are resolved against the deployed base path so they work
+   * both locally and on GitHub Pages.
    */
   portrait?: string;
 }
+
+const PORTRAIT_BASE = `${import.meta.env.BASE_URL}portraits/`;
 
 const MAKERS: Maker[] = [
   {
@@ -34,7 +36,7 @@ const MAKERS: Maker[] = [
     name: 'Nisha',
     role: 'UI/UX Designer',
     discipline: 'Design',
-    portrait: '/portraits/nisha.jpg',
+    portrait: `${PORTRAIT_BASE}nisha.jpg`,
     bio: [
       'Nisha shapes how Lithos looks and feels — from the first line of a hero to the quiet rhythm of a field guide. Her work gives the site its editorial calm, its sense of place, and the small cues that help a visitor find their way.',
       'She works across typography, colour, layout, and interaction, keeping the surface expressive without letting it get in the way of the ground.',
@@ -50,7 +52,7 @@ const MAKERS: Maker[] = [
     name: 'Priyanshu',
     role: 'Lead Developer',
     discipline: 'Development',
-    portrait: '/portraits/priyanshu.jpg',
+    portrait: `${PORTRAIT_BASE}priyanshu.jpg`,
     bio: [
       'Priyanshu builds what holds Lithos together. He turns the design into a fast, responsive site, carrying its details carefully from the first sketch to the last breakpoint.',
       'His work lives in the front end, the component system, and the small technical decisions that make a large landscape feel effortless to move through.',
